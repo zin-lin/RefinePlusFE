@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
-import book from "../assets/book.png";
+import book from "../assets/dat.png";
 import axios from "axios";
 
 interface  Props{
@@ -8,7 +8,7 @@ interface  Props{
 }
 const EditBook : React.FC= ()=>{
     const {bid} = useParams();
-    const [image, setImage] = useState("Select Cover Image")
+    const [image, setImage] = useState("Select Dataset CSV")
     const [opacity, setOpacity] = useState(0.0);
     const [selfile, setFile] = useState<File|null>(null);
     const navigate = useNavigate()
@@ -46,9 +46,9 @@ const EditBook : React.FC= ()=>{
 
         form.append('title', titleBar.value)
         if (selfile) {
-            form.append('img', selfile, selfile.name)
+            form.append('file', selfile, selfile.name)
         }
-        axios.post(`/api/updatebook/${bid}`, form).then(res=> {
+        axios.post(`/api/updateproject/${bid}`, form).then(res=> {
             navigate(`/updatebook/${bid}`)
         }).catch()
     }
@@ -69,7 +69,7 @@ const EditBook : React.FC= ()=>{
                         <div className='highlight-dark' style={{width:200, display:'flex', alignItems:'center', textAlign:'center',paddingTop:0, paddingBottom:0, height:44, margin:'auto', marginBottom:20}} onClick={handleChoose}>
                             <span style={{color: '#eee', fontSize: 19, marginRight: 10}} className="material-symbols-outlined">
                                 photo</span>
-                            <input ref={fileInput} accept='image/*' onChange={handleFileChange} type='file' placeholder = 'Select Cover Image' style={{border:'none', color:'#eee', display:'none'}}/>
+                            <input ref={fileInput} accept='text/csv' onChange={handleFileChange} type='file' placeholder = 'Select Cover Image' style={{border:'none', color:'#eee', display:'none'}}/>
                             <p>{image.length <19?image:image.substring(0,16)+'...'}</p>
                         </div>
                         <div style={{display:'flex', justifyContent:'center', width:'270px', margin:'auto'}}>

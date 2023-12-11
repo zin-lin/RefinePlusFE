@@ -9,7 +9,7 @@ const navSty = {
 }
 
 const napierColor = {
-    color:"#FF5757"
+    color:"#f547b8"
 }
 
 export default function Nav () {
@@ -17,12 +17,12 @@ export default function Nav () {
     return (
         <nav>
             <div>
-                <p  style={{fontSize:24, marginLeft:20, fontWeight:'bold'}}>{'['}Annex<span className='red'>ComicsX</span>{']'}</p>
+                <p  style={{fontSize:24, marginLeft:20, fontWeight:'bold'}}>{'['}Annex<span className='red'>Refine+</span>{']'}</p>
             </div>
             <div className='hider' style={{right:10, position:'absolute', display:'flex', height:'100%', alignItems:'center'}}>
-                <Link onClick={()=> dispatch(toHome())} to='/'><p style={{fontSize:16, margin:12 }}>Ho<span style={{color:"#FF5757"}}>me</span></p></Link>
-                <Link onClick={()=> dispatch(toBook())} to='/books'><p style={{fontSize:16, margin:12 }}>Bo<span style={{color:"#FF5757"}}>oks</span></p></Link>
-                <Link onClick={()=> dispatch(toProfile())} to='/profile'><p style={{fontSize:16, margin:12 }}>Pro<span style={{color:"#FF5757"}}>file </span></p></Link>
+                <Link onClick={()=> dispatch(toHome())} to='/'><p style={{fontSize:16, margin:12 }}>Ho<span style={{color:"#f547b8"}}>me</span></p></Link>
+                <Link onClick={()=> dispatch(toBook())} to='/books'><p style={{fontSize:16, margin:12 }}>Pro<span style={{color:"#f547b8"}}>jects</span></p></Link>
+                <Link onClick={()=> dispatch(toProfile())} to='/profile'><p style={{fontSize:16, margin:12 }}>Pro<span style={{color:"#f547b8"}}>file </span></p></Link>
                 <Link onClick={()=> dispatch(resetAllVs())} to='/search'><p style={{fontSize:16, margin:12 }}><span className="material-symbols-outlined">
                 search
                 </span></p></Link>

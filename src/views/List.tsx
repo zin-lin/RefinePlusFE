@@ -1,5 +1,5 @@
 import React from "react";
-import box from "../assets/box.png";
+import box from "../assets/empty.png";
 import {List} from "flatlist-react/lib/flatListProps";
 import FlatList from "flatlist-react/lib";
 import {useNavigate} from "react-router-dom";
@@ -18,7 +18,7 @@ const BookList: React.FC <Props>= (props:Props) =>{
     const books =   props.list
     return (
         <div style={{minWidth:300, width:'30%',height:500, margin:'20px', backgroundColor:'rgba(17,33,38,0.45)', display:'inline-block'}} className='shadow-boxer'>
-        <p style={{fontSize:33, fontWeight:'bold', marginLeft:'auto', marginRight:'auto', paddingTop:10, textAlign:'center'}}>Yo<span style={{color:'#d02f2f'}}>ur</span> Boo<span style={{color:'#d02f2f'}}>ks</span></p>
+        <p style={{fontSize:33, fontWeight:'bold', marginLeft:'auto', marginRight:'auto', paddingTop:10, textAlign:'center'}}>Yo<span style={{color:'#d02fc8'}}>ur</span> Pro<span style={{color:'#d02fc8'}}>jects</span></p>
         {books.length == 0?
             <div style={{width:'100%', height:'50%', display:'flex'}}>
                 <div style={{margin:'auto'}}>

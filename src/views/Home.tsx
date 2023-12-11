@@ -12,6 +12,9 @@ import heroS from '../assets/hero.jpg'
 import girlS from '../assets/girl.png'
 import beachS from '../assets/beach.png'
 import shelbyS from '../assets/shelby.png'
+import one from "../assets/data.png";
+import hun from "../assets/weka.png";
+import ten from "../assets/dev.png";
 
 export default function Home (){
 
@@ -38,111 +41,51 @@ export default function Home (){
 
     }, []);
 
-    return (<div className='page'>
+    return (<div className='page' style={{height:'calc(100% - 78px)'}}>
+            <div className='full-bg-img-book' style={{height:'calc(100% - 78px)', overflow:"auto" }}>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-            <div className='home-1'>
-                <div style={{width: '42%', background:'var(--primary)', left:0, display:'flex', zIndex:15,justifyContent:'center', alignItems:"center",
-                    overflow:'auto'}} className='left-sider'>
-                    <div id='console' style={{transition:'0.8s ease', opacity:opacity}}>
-                        <div style={{  display:"flex", alignItems:'center', justifyContent:'center'}}>
-                            <div style={{margin:'20px', display:'flex'}}>
-                                <div className='circle back-red'></div>
-                                <div className='circle back-pink'></div>
-                                <div className='circle back-white' ></div>
-                            </div>
+                <div style={{textAlign:'center', width:'100%',justifyContent:'center', alignItems:'center', }}>
+
+                    <p style={{fontSize:28}}>Refine + <span style={{color:'#de4c4c'}}>Offers</span></p>
+                    <div style={{width:'100%', flex:3, minWidth:300, display:'flex', justifyContent:'center',  flexDirection:'row', order:2, flexWrap:'wrap', }}>
+                        <div className='orangex shOrange' onClick={()=> {
+
+                        }}
+                             style={{margin:50, marginBottom:20,letterSpacing:0.7, padding:0, paddingBottom:30, width:'26%', minWidth:300, transition:'0.4s ease',
+                                 borderRadius:30
+                             }}>
+                            <img src={one} width={'100%'} style={{borderRadius:'30px 30px 0px 0px'}}/>
+                            <p>Preparation with OpenRefine abilities</p>
                         </div>
-                        <div style={{paddingLeft:'40px', paddingRight:'20px'}}>
-                            <p className='web-console' style={{margin:'7px'}}><span style={{color:'grey'}}>{'>>'}</span> Hello <span className='red'>World
-                            </span></p>
-                            <p className='web-console small'>........</p>
-                            <p className='web-console small'>{'<'} Let <span className='red'>me</span> introduce your <span style={{color:'grey'}}>journey
-                            </span> with Com<span
-                            className='red'
-                            >icsX</span>{'>'}</p>
+
+
+                        <div className='redx shRed' onClick={()=> {
+
+                        }}
+                             style={{margin:50, marginBottom:20, letterSpacing:0.7, padding:0, paddingBottom:30, width:'26%', minWidth:300, transition:'0.4s ease',
+                                 borderRadius:30
+                             }}>
+                            <img src={hun} width={'100%'} style={{borderRadius:'30px 30px 0px 0px'}}/>
+                            <p>Data Analysis with Weka capabilities</p>
                         </div>
+
+                        <div className='bluex shBlue' onClick={()=> {
+
+                        }}
+                             style={{margin:50, marginBottom:20,letterSpacing:0.7, padding:0, paddingBottom:30, width:'26%', minWidth:300, transition:'0.4s ease',
+                                 borderRadius:30
+                             }}>
+                            <img src={ten} width={'100%'} style={{borderRadius:'30px 30px 0px 0px'}}/>
+                            <p>Check Out Our Developments at Annex</p>
+                        </div>
+
                     </div>
                 </div>
 
-                <div style={{textAlign:"center",transition:'1.2s ease', opacity:opacity, zIndex:5}} className='left-sider'>
-                    <div className='home-cour'>
-
-                    </div>
-                    <div className='full' style={{width:'60%', position:"absolute", minHeight:'50px', overflow:"auto", display:'flex', alignItems:'center'}} >
-                        <div style={{margin:"auto", top:'auto'}}>
-                            <p className='enucs' >{'['}com<span className='red'>icsX</span>{']'}</p>
-                            <div style={{border:'3px', borderStyle:'solid', marginLeft:'22%', padding:'20px', marginRight:'22%',width:'auto',
-                                borderRadius:'0px 82px 0px 0px',  transition:'0.4s ease', minHeight:113, alignSelf:'center'
-                            }}>
-                            <p className='text-shadow hider' style={{width:'60%', margin:"auto", transition:'0.4s ease '}}>
-                                {text}
-                            </p><br/>
-                            </div>
-                            <br/>
-                            <br/>
-                            <br/>
-                            <button className='redx shRed' style={{width:'200px',padding:'10px'}} onClick ={
-                                ()=>{ //onCLick
-                                    dispatch(toProfile()); //dispatch to profile
-                                    dispatch(toRegister());
-                                    navigate('/books');
-                                }
-                            }>Create a Book Now</button>
-                            <br/><br/>
-                            <button className='orangex shOrange' style={{width:'200px',padding:'10px'}}
-                            onClick={()=>{
-                                dispatch(toProfile()); //dispatch to profile
-                                dispatch(toRegister());
-                                navigate('/profile');
-                            }}
-                            >Join Annex</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div style={{position:'relative', zIndex:6}}>
-                <MobileHome/>
-            </div>
-
-
-            <br/>
-
-            <div style={{background:'var(--primary)', opacity:opacity}}>
-            <div style={{zIndex:19,marginTop:-2,
-                background:'var(--primary)' ,position:'relative', padding:'0px', width:'100%'}}>
-
-                <img  style={{width:'100%', height:'auto'}} src={shelbyS}>
-
-                </img>
-
-            </div>
-                <br/>
-                <br/>
-            <div style={{zIndex:19,marginTop:-2,
-                background:'var(--primary)' ,position:'relative', padding:'0px', width:'100%'}}>
-
-                <img  style={{width:'100%', height:'auto'}} src={girlS}>
-
-                </img>
-
-            </div>
-
-                <br/>
-                <br/>
-            <div style={{zIndex:19,marginTop:-2,
-                background:'var(--primary)' ,position:'relative', padding:'0px', width:'100%'}}>
-
-                <img  style={{width:'100%', height:'auto'}} src={beachS}>
-
-                </img>
-
-            </div>
-            </div>
-            <div style={{zIndex:9, height:'auto', background:'var(--primary)', marginTop:-2 ,position:'relative', padding:'30px'}}>
+            <div style={{zIndex:9, height:'auto', marginTop:-2 ,position:'relative', padding:'30px'}}>
                 <br/>
                 <div style={{display:'flex', alignItems:'center', width:"100%", alignContent:'center', justifyContent:"center"}}>
-                    <p style={{color:"#aaa", fontSize:23, fontWeight:"bold"}}>We Offer</p>
+                    <p style={{color:"#aaa", fontSize:23, fontWeight:"bold"}}>About Us</p>
                 </div>
                 <div style={{flex:2, display:'flex',  height:'auto', width:'auto', justifyContent:"center", flexWrap:'wrap', order:2, flexDirection:'row'}}>
 
@@ -186,6 +129,10 @@ export default function Home (){
 
                 </div>
                 <br/>
+                <br/>
+                <br/>
+                <br/>
+            </div>
             </div>
         </div>
 

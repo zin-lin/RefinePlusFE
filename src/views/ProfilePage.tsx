@@ -90,19 +90,11 @@ const ProfilePage: React.FC<Props>= ({name, id})=>{
                   </div>
                   <br/>
 
-                  <div style={{display:"flex", alignItems:'center', justifyContent:'left', paddingLeft:27, width:'calc(100% - 27px)'}}>
-                      <span className="material-symbols-outlined" style={{color: '#757575'}}>key</span>
-                      <p style={{color:'#fff', marginLeft:30}}>API Key Tokens:</p>
-                      <p style={{ marginLeft:50, marginRight:100}} className='highlight-dark'>{api.toString()===""?0:api.toString()}</p>
-                      {name !== ''?<button className='highlight-dark' onClick={() => {
-                          navigate(`/pay/${uid}`)
-                      }}>Add Images</button>:<div></div>}
-                  </div>
 
                   <br/>
                   <br/>
                   <div style={{alignItems:'center', display:'flex', justifyContent:'center'}}>
-                      <button className="orangex shOrange" style={{padding:13, marginRight:20, fontSize:13}} onClick={()=>updateDatabase(api)} >
+                      <button className="bluex shBlue" style={{padding:13, marginRight:20, fontSize:13}} onClick={()=>updateDatabase(api)} >
                           Save Changes
                       </button>
                       <button className='redx shRed' style={{padding:13,  fontSize:13}} onClick={()=>{

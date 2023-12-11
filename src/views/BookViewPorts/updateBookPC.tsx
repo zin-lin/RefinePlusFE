@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import ai from "../../assets/open.png"
-import box from "../../assets/box.png";
+import box from "../../assets/dat.png";
 import sc from "../../assets/scene.png";
 import axios from "axios";
 import list from "../List";
@@ -11,6 +11,12 @@ import {saveAs} from 'file-saver';
 
 interface Props{
     bid : string;
+}
+
+interface Meta{
+    list: string[];
+    len: number;
+
 }
 
 const UpdateBookPC: React.FC<Props>= (props:Props)=>{
@@ -31,6 +37,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     let [uid, setUid] = useState();
     let inx = 0;
 
+    let [meta, setMeta] = useState<Meta|undefined>(undefined);
 
     let [displaySImage, setDisplaySImage] = useState(box)
     let [saveMode, setSaveMode] = useState('write')
@@ -443,26 +450,20 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     useEffect(()=>{
         fetch(`/api/getbook/${bid}`).then(res => res.json()).then(data =>{
             setTitle(data['title']);
-            fetch(`/api/getimage/${bid}`).then(res=> res.blob()).then(img =>{
-                console.log(img)
-                if (img.size !== 0){
-
-                    const url = window.URL.createObjectURL(new Blob([img]))
-                    setImage(url)
-
-                }
-                // call scenes
-                newScence()
-
+            fetch(`/api/get-project-details/${bid}`).then(resp => resp.json()).then(details =>{
+                let meta: Meta = details;
+                meta.len = details['len']
+                meta.list = details['attributes']
+                setMeta(meta!)
             })
             console.log(data)
         });
-        fetch(`/api/authed/`).then(res => res.text()).then(data =>{
+        fetch(`/api/authed`).then(res => res.text()).then(data =>{
             let uid = data;
             let form: FormData = new FormData();
             form.append('uid', uid);
             form.append('bid', bid);
-            axios.post(`/api/getlikes/ `, form).then(res => setLikes(res.data['likes']))
+            //axios.post(`/api/getlikes/ `, form).then(res => setLikes(res.data['likes']))
         })
         console.log(`msg :: ${msg.length}`)
         askGPT()
@@ -472,7 +473,9 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     }, [index, max, msg])
 
     return (
-       <div className='page-loss' style={{width:'100%', flex:2, display:'flex', backgroundColor:'transparent', paddingTop:3}}>
+       <div className='page' style={{width:'100%', flex:2, display:'flex', backgroundColor:'transparent', paddingTop:3, justifyContent:'center', height:'calc(100% - 8px)',
+           overflow:'auto'
+       }}>
            <div style={{width:'100%', height:'calc(100% - 140px)', position:'absolute', background:'transparent', zIndex:43, visibility:addVisibility||'hidden', opacity:addOpacity,
                flex:1, display:'flex', justifyContent:'center', transition:'0.2s ease'
                  }} >
@@ -515,80 +518,16 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                    </div>
                </div>
            </div>
-           <div style={{width:'calc(30%)', marginLeft:20,borderRadius:50  ,backgroundColor:'rgba(17,24,38,0.76)', height:'calc(100% - 20px)',backdropFilter:'blur(6.0px)', zIndex:3, overflow:'auto'}}
-                className='shadow-boxer'>
-               <div style={{padding:20,color:'#ddd'}}>
-                   <p style={{textAlign:'center', fontSize:23, fontWeight:'bold', }}>Your <span style={{color:'#c44040'}}>AI</span> Assistant <span style={{color:'#c44040'}}>Server</span></p>
-                   {msg.length === 0? <div style={{
-                       width: '100%',
-                       height: 200,
-                       display: 'flex',
-                       justifyContent: 'center',
-                       alignItems: 'top'
-                   }}>
-                       <img src={ai} width={100} style={{margin: 'auto'}}/>
-                   </div> : <div></div>}
 
-                   <div style={{margin:30}}>
-                       <div style={{width:'100%', height:20, borderRadius:10, background:'rgba(26,43,51,0.37)', zIndex:30}}>
-                           <div style={{width:'88%', height:20, borderRadius:10, background:'#ff7d38'}}>
-
-                           </div>
-                       </div>
-                       <div style={{textAlign:'center',marginTop:9, boxShadow:'0px 20px 10px rgba(17,24,38,0.46)', alignItems:'center', padding:3, display:'flex',
-                           justifyContent:'center'
-                       }}>
-                           GPT 3.5 <span className='highlight-dark' style={{marginLeft:7, padding:7.3}}>Turbo</span>
-                           <span style={{marginLeft:7}} onClick={callImgGen}
-                           className="material-symbols-outlined highlight-dark">
-                            add_photo_alternate
-                            </span>
-                       </div>
-                       { msg.length === 0?
-                           <div style={{margin:0, padding:30, background:'rgba(26,43,51,0.37)', borderRadius:20, marginTop:60}}>
-                               <p>Start Asking Questions to <span className='highlight-dark'>AI Model</span> by connecting to the Server</p>
-                               <div style={{display:'flex', justifyContent:'center'}}>
-                                   <div className='highlight-dark' style={{padding:14}}>Default Key 🔑</div>
-                               </div>
-                           </div>:
-                           <div style={{width:'100%', height:'60vh', minHeight:'220px', overflowY:'auto'}} ref={containerRef}>
-                                <FlatList list={msg} renderItem={(item, key)=>{
-                                    return (
-                                        <div style={{width:'calc(100% - 60px)',transition:'0.4s ease' ,padding:20, margin:10, borderRadius:30, background:'rgba(8,22,31,0.59)',
-                                        lineHeight:1.5
-                                        }}>
-                                            {parseInt(key) %2 ==0 ? <p>{item}</p>:<p style={{color:'rgba(231,177,138,0.49)'}}><span style={{color:'#e35353'}}>GPT:</span><Markdown>{item}</Markdown></p>}
-                                        </div>
-                                    );
-                                }}/>
-                           </div>
-
-                       }
-                       <div style={{width:'100%', flex:1, display:'flex', justifyContent:'center'}}>
-                           <input id = 'msg' placeholder='Ask something to GPT' style={{border:1, color:'#eee'}} onKeyDown={(eve)=> {
-                               if (eve.key === 'Enter'){
-                                   let input = document.getElementById('msg') as HTMLInputElement;
-                                   let que = input.value; // get input value
-                                   let new_msg = [...msg, que]
-                                   setMessage(new_msg) // add que to list
-                                   input.disabled = true
-                                   input.placeholder = 'Loading...'
-                               }
-                           }}/>
-                       </div>
-                   </div>
-
-               </div>
-           </div>
-           <div style={{width:'calc(70% - 0px)', justifySelf:'right', zIndex:2}}>
-               {mode === 'book' ?<div style={{width: '100%', height: '100%'}}>
+           <div style={{width:'calc(100% - 0px)', maxWidth:1500 ,justifySelf:'right', zIndex:2}}>
+              <div style={{width: '100%', }}>
                    <div style={{
                        width: 'calc(100% - 60px)',
                        marginLeft: 30,
                        marginRight: 30,
                        borderRadius: 50,
-                       backgroundColor: 'rgba(17,24,38,0.45)',
-                       height: '40%',
+                       backgroundColor: 'rgba(31,17,38,0.45)',
+                       height: 350,
                        backdropFilter: 'blur(6.0px)',
                        zIndex: 3,
                        overflow: 'auto'
@@ -626,75 +565,49 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                        </div>
                    </div>
 
-                   <div style={{width: '100%', height: '60%', flex: 2, display: 'flex'}}>
-                       <div style={{width: '50%', height: '100%'}}>
+                   <div style={{width: '100%', height: 500, flex: 2, display: 'flex',flexWrap:'wrap', order:2, flexDirection:'row', justifyContent:'center'}}>
+                       <div style={{width: '50%', height: '100%', minWidth:340}}>
 
                            <div style={{
-                               margin: 40,
+                               margin: 30,
                                borderRadius: 30,
-                               backgroundColor: 'rgba(17,24,38,0.45)',
+                               backgroundColor: 'rgba(49,30,42,0.45)',
                                height: 'calc(100% - 80px)',
                                width: 'calc(100% - 60px)',
                                backdropFilter: 'blur(7.0px)',
                                overflow :'auto',
                                display: 'flex',
                                justifyContent: 'center',
-                               alignItems: 'center'
+                               textAlign:'center',
                            }}>
-                               <div style={{}}>
-                                   <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
-                                   <div style={{
-                                       justifySelf:'center',
-                                       background: 'rgba(16,37,40,0.7)',
-                                       width: 150,
-                                       textAlign:'center',
-                                       height: 150,
-                                       borderRadius: '50%',
-                                       display: 'flex',
-                                       flex: 1
-                                   }}>
-                                       <div className='pie-chart' style={{
-                                           background: `conic-gradient(#ff7d38 ${(likes/(Math.round(likes/10)+1 * 10))*360}deg , #c44040 ${360- (likes/(Math.round(likes/10)+1 * 10))*360}deg)`,
-                                           display: 'flex',
-                                           width: '150px',
-                                           height: '150px',
-                                           flex: 1,
-                                           justifyContent: 'center',
-                                           alignItems: 'center'
-                                       }}>
-                                           <div style={{
-                                               margin: 'auto',
-                                               width: 130,
-                                               height: 130,
-                                               background: 'rgb(16,29,40)',
-                                               borderRadius: '50%'
-                                           }}>
+                               <div style={{margin:30, width:'80%'}}>
+                               <p style={{fontSize:30}}>Meta<span style={{color:'#ce4045', fontWeight:'bold'}}>Data</span></p>
+                                   <div style={{height:290, overflow:'auto', width:'100%'}}>
+                                       {meta !== undefined?
+                                           <div>
+                                               <div style={{display:'flex'}}>
+                                                   <div className='circle' style={{background:'white'}}></div><div className='circle' style={{background:'#4eb9b5'}}></div><div className='circle' style={{background:'#9e4eb9'}}></div>
+                                               </div>
+                                               <p style={{color:'#ddd'}}> The Attributes</p>
+                                               <div style={{display:'flex', flexWrap:'wrap', order:'2'}}>
+                                                   {meta.list.map(att =>{
+                                                       return <div className='highlight-dark' style={{margin:6, color:'#aaa'}}>{att}</div>
+                                                   })}
+                                               </div>
 
+                                               <p style={{color:'#ddd'}}>Number of rows: <span style={{color:'#ea37b1'}}>{meta.len}</span></p>
                                            </div>
-                                       </div>
-                                   </div>
-                                   </div>
-                                   <br/>
-                                   <br/>
-                                   <p style={{textAlign: 'center', fontSize: 24}}>My <span
-                                       style={{color: '#ff9d4a', fontWeight: 'bold'}}>Goals</span></p>
-                                   <div style={{marginLeft: 0, width:'100%', textAlign:'center'}}>
-                                       <p style={{textAlign: 'center', color:'#f36464'}}>Total Likes <span
-                                           className='highlight-dark'>{likes}</span></p>
-                                        
-                                       <p style={{textAlign: 'center', marginTop: 25, color:'#ff804f'}}>Goal Likes <span
-                                           className='highlight-dark'>{Math.round(likes/10)+1 *10}</span></p>
+                                       :<div></div>}
                                    </div>
                                </div>
                            </div>
                        </div>
 
-                       <div style={{width: '50%', height: '100%'}}>
+                       <div style={{width: '50%', height: '100%', minWidth:340}}>
                            <div style={{
-                               margin: 40,
-                               marginLeft: 20,
+                               margin: 30,
                                borderRadius: 30,
-                               backgroundColor: 'rgba(17,24,38,0.45)',
+                               backgroundColor: 'rgba(27,21,30,0.51)',
                                height: 'calc(100% - 80px)',
                                width: 'calc(100% - 60px)',
                                backdropFilter: 'blur(7.0px)',
@@ -711,109 +624,16 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                                        <img src={sc} width={200}/>
                                        <br/>
                                        <button className='redx shRed' style={{padding: 10, marginTop: 50, width: 200}} onClick={updateMode}>
-                                           <p>Start Working With or Open Scenes Now</p></button>
+                                           <p>Start Working with Data Preparation</p></button>
                                    </div>
                                </div>
                            </div>
                        </div>
 
                    </div>
-               </div>:
-                   <div style={{width:'100%', height:'100%', transition:'0.4s ease'}}>
-                       <div style={{width: '100%', height: '100%'}}>
-                           <div style={{
-                               width: 'calc(100% - 60px)',
-                               marginLeft: 30,
-                               marginRight: 30,
-                               borderRadius: 50,
-                               backgroundColor: 'rgba(17,24,38,0.45)',
-                               height: '40%',
-                               backdropFilter: 'blur(6.0px)',
-                               zIndex: 3,
-                               overflow: 'auto'
-                           }} className='shadow-boxer'>
-                               <div style={{padding: 20, color: '#ddd'}}>
-                                   <div style={{
-                                       width: '100%',
-                                       height: 200,
-                                       display: 'flex',
-                                       justifyContent: 'center',
-                                       alignItems: 'top'
-                                   }}>
-                                       <div style={{
-                                           width: '100%',
-                                           height: '50%',
-                                           display: 'flex',
-                                           justifyContent: 'center',
-                                           alignItems: 'center'
-                                       }}>
-
-                                               <div style={{margin: 'auto', textAlign: 'center'}}>
-                                                   <div style={{ display:'flex', justifyContent:'center', flex:2}}>
-                                                       <div className='highlight-dark'
-                                                            style={{width:200, display:'flex', alignItems:'center',
-                                                                textAlign:'center',paddingTop:0, paddingBottom:0,
-                                                                height:44, marginBottom:20, marginRight:20}} onClick={handleChoose}>
-                                                            <span style={{color: '#eee', fontSize: 19, marginRight: 10}} className="material-symbols-outlined">
-                                                                photo</span>
-                                                           <input ref={fileInput} accept='image/*' onChange={handleFileChange} type='file' placeholder = 'Select Cover Image'
-                                                                  style={{border:'none', color:'#eee', display:'none'}}/>
-                                                           <p>{simage.length <19?simage:simage.substring(0,16)+'...'}</p>
-                                                       </div>
-                                                       <button className='orangex shOrange' style={{padding:10, height:42, margin:0}} onClick={updateMode}>Go back to book</button>
-                                                       </div>
-                                                   <img style={{margin: 'auto', borderRadius: 20, marginTop: 10, width:'100%'}} src={displaySImage}
-                                                        />
-
-                                           </div>
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
+               </div>
 
 
-                           <div style={{borderRadius: 30, height:'calc(60% - 60px)', width:'100%'}}>
-
-                               <div style={{margin:40, borderRadius:30 , width:'calc(100% - 80px)', height:'100%', boxShadow:'2px 2px 22px rgba(17,24,38,0.22)' ,
-                                   backgroundColor: 'rgba(17,24,38,0.45)', backdropFilter:'blur(3.6px)'}}>
-                                   <textarea style={{width:'calc(100% - 115px)', margin:60, marginBottom:12, border:'none',
-                                       height:'calc(100% - 170px)'}} id='text' placeholder='Write Your Scene Out Here: Your Scene 1' ></textarea>
-                                   <div style={{display:'flex' , alignItems:'center', overflowX:'auto'}}>
-                                       <div onClick={saveAndNext} className='highlight-dark' style={{margin:'30px', marginLeft:60, padding:10,
-                                           maxWidth:200, display:'flex', alignItems:'center'}}>Ne<span style={{color:'#ff6c6c', marginLeft:0}}>{'xt'}</span> <span
-                                           className="material-symbols-outlined " style={{marginLeft:20, color:'rgba(170,170,170,0.45)'}}>
-                                        arrow_forward
-                                        </span>
-                                       </div>
-                                       <div onClick={latestScence} className='highlight-dark' style={{margin:'30px', marginLeft:10, padding:10, maxWidth:290, display:'flex',
-                                           alignItems:'center'}}>Lat<span style={{color:'#ff6c6c', marginLeft:0, marginRight:0}}>{'est'}</span><span
-                                           className="material-symbols-outlined " style={{marginLeft:20, color:'rgba(170,170,170,0.45)'}}>
-                                        save
-                                        </span>
-                                       </div>
-
-                                       <div onClick={save} className='highlight-dark' style={{margin:'30px', marginLeft:10, padding:10, maxWidth:290, display:'flex',
-                                           alignItems:'center'}}>Save<span
-                                           className="material-symbols-outlined " style={{marginLeft:20, color:'rgba(170,170,170,0.45)'}}>
-                                        save
-                                        </span>
-                                       </div>
-
-                                       <div  onClick={saveAndPrev}  className='highlight-dark' style={{margin:'30px', marginLeft:10, padding:10, maxWidth:290, display:'flex',
-                                           alignItems:'center'}}>Ba<span style={{color:'#ff6c6c', marginLeft:0}}>{'ck'}</span>  <span
-                                           className="material-symbols-outlined " style={{marginLeft:20, color:'rgba(170,170,170,0.45)'}}>
-                                        arrow_back
-                                        </span>
-                                       </div>
-                                       <button onClick={callNavigate} style={{height:45}} className='highlight-dark'>Navigate</button>
-                                   </div>
-
-                               </div>
-                           </div>
-
-                       </div>
-                   </div>
-               }
            </div>
        </div>
     );
