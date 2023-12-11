@@ -595,7 +595,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                                                    })}
                                                </div>
 
-                                               <p style={{color:'#ddd'}}>Number of rows: <span style={{color:'#ea37b1'}}>{meta.len}</span></p>
+                                               <p style={{color:'#ddd'}}><span style={{fontWeight:'bold'}}>Number of rows:</span> <span style={{color:'#ea37b1'}}>{meta.len}</span></p>
                                            </div>
                                        :<div></div>}
                                    </div>

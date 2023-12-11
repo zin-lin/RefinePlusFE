@@ -4,4 +4,4 @@
 - `Typescript`
 - `released`
 - `built`
-
+- `CRUD` done
