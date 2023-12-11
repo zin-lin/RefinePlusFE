@@ -8,6 +8,7 @@ import list from "../List";
 import FlatList from "flatlist-react/lib";
 import Markdown from "react-markdown";
 import {saveAs} from 'file-saver';
+import {BarLoader} from "react-spinners";
 
 interface Props{
     bid : string;
@@ -42,6 +43,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     let [displaySImage, setDisplaySImage] = useState(box)
     let [saveMode, setSaveMode] = useState('write')
 
+    let [loading, setLoading] = useState(true)
     // for nav bar
     let [addOpacity, setAddOpacity] = useState(0)
     const [addVisibility, setAddVisibility] = useState<Visibility | undefined>('hidden')
@@ -455,6 +457,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                 meta.len = details['len']
                 meta.list = details['attributes']
                 setMeta(meta!)
+                setLoading(false)
             })
             console.log(data)
         });
@@ -582,23 +585,27 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                            }}>
                                <div style={{margin:30, width:'80%'}}>
                                <p style={{fontSize:30}}>Meta<span style={{color:'#ce4045', fontWeight:'bold'}}>Data</span></p>
-                                   <div style={{height:290, overflow:'auto', width:'100%'}}>
-                                       {meta !== undefined?
+                                   {!loading? <div style={{height: 290, overflow: 'auto', width: '100%'}}>
+                                       {meta !== undefined ?
                                            <div>
-                                               <div style={{display:'flex'}}>
-                                                   <div className='circle' style={{background:'white'}}></div><div className='circle' style={{background:'#4eb9b5'}}></div><div className='circle' style={{background:'#9e4eb9'}}></div>
+                                               <div style={{display: 'flex'}}>
+                                                   <div className='circle' style={{background: 'white'}}></div>
+                                                   <div className='circle' style={{background: '#4eb9b5'}}></div>
+                                                   <div className='circle' style={{background: '#9e4eb9'}}></div>
                                                </div>
-                                               <p style={{color:'#ddd'}}> The Attributes</p>
-                                               <div style={{display:'flex', flexWrap:'wrap', order:'2'}}>
-                                                   {meta.list.map(att =>{
-                                                       return <div className='highlight-dark' style={{margin:6, color:'#aaa'}}>{att}</div>
+                                               <p style={{color: '#ddd'}}> The Attributes</p>
+                                               <div style={{display: 'flex', flexWrap: 'wrap', order: '2'}}>
+                                                   {meta.list.map(att => {
+                                                       return <div className='highlight-dark'
+                                                                   style={{margin: 6, color: '#aaa'}}>{att}</div>
                                                    })}
                                                </div>
 
-                                               <p style={{color:'#ddd'}}><span style={{fontWeight:'bold'}}>Number of rows:</span> <span style={{color:'#ea37b1'}}>{meta.len}</span></p>
+                                               <p style={{color: '#ddd'}}><span style={{fontWeight: 'bold'}}>Number of rows:</span>
+                                                   <span style={{color: '#ea37b1'}}>{meta.len}</span></p>
                                            </div>
-                                       :<div></div>}
-                                   </div>
+                                           : <div></div>}
+                                   </div>: <BarLoader loading={true} cssOverride={{width:'100%'}} color={'#ef2fb8'}/>}
                                </div>
                            </div>
                        </div>
