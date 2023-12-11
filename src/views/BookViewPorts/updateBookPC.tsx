@@ -476,7 +476,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     }, [index, max, msg])
 
     return (
-       <div className='page' style={{width:'100%', flex:2, display:'flex', backgroundColor:'transparent', paddingTop:3, justifyContent:'center', height:'calc(100% - 8px)',
+       <div style={{width:'100%', flex:2, display:'flex', backgroundColor:'transparent', paddingTop:0, justifyContent:'center', height:'calc(100% - 0px)',
            overflow:'auto'
        }}>
            <div style={{width:'100%', height:'calc(100% - 140px)', position:'absolute', background:'transparent', zIndex:43, visibility:addVisibility||'hidden', opacity:addOpacity,
@@ -523,6 +523,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
            </div>
 
            <div style={{width:'calc(100% - 0px)', maxWidth:1500 ,justifySelf:'right', zIndex:2}}>
+               <div style={{margin:40}}></div>
               <div style={{width: '100%', }}>
                    <div style={{
                        width: 'calc(100% - 60px)',
