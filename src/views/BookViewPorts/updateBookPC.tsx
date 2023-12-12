@@ -63,6 +63,8 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     const fileInput = useRef<HTMLInputElement>(null);
     const coverInput = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    const [slb, setSLB] = useState('slide-bottom');
     // methods
     const updateMode = ()=>{
         if (mode === 'book')
@@ -72,8 +74,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     }
 
     useEffect(()=>{
-        const div = document.getElementById('slide');
-        div!.className +=' active';
+        setSLB('slide-right active');
         fetch(`/api/getbook/${bid}`).then(res => res.json()).then(data =>{
             setTitle(data['title']);
             fetch(`/api/get-project-details/${bid}`).then(resp => resp.json()).then(details =>{
@@ -101,7 +102,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
     return (
        <div style={{width:'100%', flex:2, display:'flex', backgroundColor:'transparent', paddingTop:0, justifyContent:'center', height:'calc(100% - 0px)',
            overflow:'auto'
-       }} className='slide-bottom' id ='slide'>
+       }} className={slb}>
            <div style={{width:'calc(100% - 0px)', maxWidth:1500 ,justifySelf:'right', zIndex:2}}>
                <div style={{margin:40}}></div>
               <div style={{width: '100%', }}>

@@ -27,6 +27,8 @@ export default function Home (){
 
     const navigate = useNavigate();
     const dispatch = useAuthDispatch();
+    const [cn, setCN] = useState('slide-bottom');
+    const [slr, setSLR] = useState('slide-right');
     dispatch(toHome());
 
     // adding the text adder
@@ -38,8 +40,8 @@ export default function Home (){
         setOpacity(1);
         const div = document.getElementById('slide1');
         const div2 = document.getElementById('slide2');
-        div!.className += ' active';
-        div2!.className += ' active';
+        setCN('slide-bottom active')
+        setSLR('slide-right active')
         const fullText = "comicsX is the leading society hosting contributors from all around the world. Join us explore the world of ai and comics by clicking the button below."; // The complete text to append
         let currentIndex = 0;
         setText(fullText)
@@ -51,11 +53,11 @@ export default function Home (){
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
                 <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:50, marginBottom:70 ,transition: 'left 0.3s ease-in-out', left:0, animation: 'slide 0.5s forwards'}}>
-                    <div style={{width:'100%', display:'flex', justifyContent:'center',  left:0}} className='slide-bottom' id='slide1'>
+                    <div style={{width:'100%', display:'flex', justifyContent:'center',  left:0}} className={cn} id='slide1'>
                     <img src={aai} width={'60%'}/>
                     </div>
                 </div>
-                <div style={{textAlign:'center', width:'100%',justifyContent:'center', alignItems:'center', }} className='slide-right' id='slide2'>
+                <div style={{textAlign:'center', width:'100%',justifyContent:'center', alignItems:'center', }} className={slr} id='slide2'>
 
                     <p style={{fontSize:28}}>Refine + <span style={{color:'#de4c4c'}}>Offers</span></p>
                     <div style={{width:'100%', flex:3, minWidth:300, display:'flex', justifyContent:'center',  flexDirection:'row', order:2, flexWrap:'wrap', }}>
