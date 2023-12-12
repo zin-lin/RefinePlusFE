@@ -1201,7 +1201,9 @@ p.aText {
   height:  100%;
 }
 
-
+.highlight{
+  font-size: 16px;
+}
 
 @media screen  and (max-width: 792px) {
   .wrap-text-white{
@@ -1214,6 +1216,9 @@ p.aText {
     width: 650px;
   }
 
+  .highlight{
+    font-size: 12px;
+  }
 
 
 @media screen and (max-width: 700px){

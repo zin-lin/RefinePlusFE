@@ -151,7 +151,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                    </div>
 
                   <div style={{width: '100%', flex: 2, display: 'flex',flexWrap:'wrap', order:2, flexDirection:'row', justifyContent:'center'}}>
-                      <div style={{width: '50%', height: '100%', minWidth:340}}>
+                      <div style={{width: '50%', height: '100%', minWidth:380}}>
 
                           <div style={{
                               margin: 30, height: 440,
@@ -191,7 +191,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                           </div>
                       </div>
 
-                      <div style={{width: '50%', height: '100%', minWidth:340}}>
+                      <div style={{width: '50%', height: '100%', minWidth:380}}>
                           <div style={{
                               margin: 30,
                               borderRadius: 30, marginBottom:0,
@@ -221,7 +221,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                   </div>
 
                   <div style={{width: '100%', height: 500,  display: 'flex',flexWrap:'wrap', flexDirection:'row', justifyContent:'center', marginTop:40}}>
-                      <div style={{width: '50%', height: '100%', minWidth:340}}>
+                      <div style={{width: '50%', height: '100%', minWidth:380}}>
 
                           <div style={{
                               margin: 30,
@@ -285,7 +285,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                           </div>
                       </div>
 
-                      <div style={{width: '50%', height: '100%', minWidth:340}}>
+                      <div style={{width: '50%', height: '100%', minWidth:380}}>
                           <div style={{
                               margin: 30,
                               borderRadius: 30,
@@ -322,7 +322,7 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                                       <br/>
 
                                       <div>
-                                          <span className='highlight' style={{margin:10}}>SimpleKMeans - Clustering</span>
+                                          <span className='highlight' style={{margin:10}}>KMeans - Clustering</span>
                                           <p style={{margin:10, marginTop:17}}>This algorithm produces groups of rows to label such unlabelled data to show interesting patterns</p>
                                       </div>
                                       <br/>
