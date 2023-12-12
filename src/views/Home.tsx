@@ -14,6 +14,7 @@ import beachS from '../assets/beach.png'
 import shelbyS from '../assets/shelby.png'
 import one from "../assets/data.png";
 import hun from "../assets/weka.png";
+import aai from "../assets/aai.png";
 import ten from "../assets/dev.png";
 
 export default function Home (){
@@ -35,6 +36,10 @@ export default function Home (){
     useEffect(() => {
 
         setOpacity(1);
+        const div = document.getElementById('slide1');
+        const div2 = document.getElementById('slide2');
+        div!.className += ' active';
+        div2!.className += ' active';
         const fullText = "comicsX is the leading society hosting contributors from all around the world. Join us explore the world of ai and comics by clicking the button below."; // The complete text to append
         let currentIndex = 0;
         setText(fullText)
@@ -44,7 +49,13 @@ export default function Home (){
     return (<div className='page' style={{height:'calc(100% - 78px)'}}>
             <div className='full-bg-img-book' style={{height:'calc(100% - 78px)', overflow:"auto" }}>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-                <div style={{textAlign:'center', width:'100%',justifyContent:'center', alignItems:'center', }}>
+
+                <div style={{width:'100%', display:'flex', justifyContent:'center', marginTop:50, marginBottom:70 ,transition: 'left 0.3s ease-in-out', left:0, animation: 'slide 0.5s forwards'}}>
+                    <div style={{width:'100%', display:'flex', justifyContent:'center',  left:0}} className='slide-bottom' id='slide1'>
+                    <img src={aai} width={'60%'}/>
+                    </div>
+                </div>
+                <div style={{textAlign:'center', width:'100%',justifyContent:'center', alignItems:'center', }} className='slide-right' id='slide2'>
 
                     <p style={{fontSize:28}}>Refine + <span style={{color:'#de4c4c'}}>Offers</span></p>
                     <div style={{width:'100%', flex:3, minWidth:300, display:'flex', justifyContent:'center',  flexDirection:'row', order:2, flexWrap:'wrap', }}>
@@ -81,6 +92,7 @@ export default function Home (){
 
                     </div>
                 </div>
+
 
             <div style={{zIndex:9, height:'auto', marginTop:-2 ,position:'relative', padding:'30px'}}>
                 <br/>

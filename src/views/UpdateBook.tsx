@@ -27,7 +27,7 @@ const UpdateBook: React.FC= ()=>{
     }, [])
 
     return (
-        <div className='page' style={{backgroundColor:'var(--primary)'}}>
+        <div className='page' style={{backgroundColor:'var(--primary)',overflow:'hidden'}}>
             <div style={{width:'100%', height:'100%',position:'relative', transition:'0.6s ease', opacity:opacity, }} className='full-bg-img-book' >
                 <UpdateBookPC bid={bid || ''} />
 

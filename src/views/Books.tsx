@@ -92,6 +92,10 @@ const Books: React.FC= ()=>{
             console.log(selfile)
             form.append('img', selfile, selfile.name);
         }
+        else{
+            alert('Choose Dataset')
+            return
+        }
 
         closeAddBook()
         alert("Creating project...")
@@ -108,9 +112,9 @@ const Books: React.FC= ()=>{
 
 
     return (
-        <div className='page' style={{height:'calc(100% - 78px)'}}>
+        <div className='page' style={{height:'calc(100% - 78px)', overflow:'hidden'}}>
             <div style={{width:'100%', height:'calc(100% - 140px)', position:'absolute', background:'transparent', zIndex:43,
-                visibility:addVisibility||'hidden', opacity:addOpacity,
+                visibility:addVisibility||'hidden', opacity:addOpacity, overflow:'hidden',
                 flex:1, display:'flex', justifyContent:'center', transition:'0.2s ease'
             }} >
                 <div style={{minWidth:350, width:'33%',height:500, margin:'20px', backgroundColor:'rgba(4,19,21,0.76)', display:'flex', justifyContent:'center'}} className='shadow-boxer'>

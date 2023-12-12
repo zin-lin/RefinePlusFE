@@ -57,7 +57,7 @@ App{
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: rgba(21, 32, 54, 0.78);
+  background: rgba(116, 187, 189, 0.13);
 
 }
 
@@ -799,9 +799,39 @@ p.aText {
   padding: 5px;
   padding-left: 14px;
   padding-right: 14px;
-  background-color: #e7e7e7;
-  color: #131F2E;
+  background-color: #d0d0d0;
+  color: #676767;
   transition: 0.4s ease;
+}
+
+.slide-bottom {
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 2s;
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+  transition: 1s ease;
+}
+
+.slide-bottom.active{
+  transform: translateY(0%);
+  -webkit-transform: translateY(0%);
+}
+
+.slide-right {
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 2s;
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  transition: 1s ease;
+}
+
+.slide-right.active{
+  transform: translateX(0%);
+  -webkit-transform: translateX(0%);
 }
 
 .highlight:hover{
@@ -1147,7 +1177,7 @@ p.aText {
 
 .full-bg-img-mask::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background: rgba(11, 15, 23, 0.58);
+  background: rgba(37, 45, 63, 0.58);
 
 }
 .full-bg-img {
