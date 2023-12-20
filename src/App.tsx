@@ -22,6 +22,7 @@ import Payment from "./views/Payment";
 import {Elements} from "@stripe/react-stripe-js";
 import { loadStripe } from '@stripe/stripe-js';
 import {createProxyMiddleware, RequestHandler} from 'http-proxy-middleware';
+import Project from "./views/Project";
 
 // main app
 function App() {
@@ -48,6 +49,7 @@ function App() {
                         <Route path='/eventadd/' element={<EventAdd/>}  />
                         <Route path='/eventview/' element={<EventView/>}  />
                         <Route path='/pay/:uid' element={<Payment/>}  />
+                        <Route path='/project/:pid' element={<Project/>}  />
                     </Routes>
               </div>
               <MobileNav/>

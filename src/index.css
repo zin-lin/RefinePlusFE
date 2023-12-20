@@ -24,6 +24,8 @@ body {  background: var(--primary);
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-face-color: transparent; /* Hide the face of the scrollbar */
+  scrollbar-highlight-color: transparent; /* Hide the highlight of the scrollbar */
 }
 
 code {
@@ -46,7 +48,12 @@ App{
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
   margin-right: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 
@@ -615,7 +622,7 @@ button.white-shadow:focus {
 
 hr {
   border: 0.2px solid #0000000c;
-  color: #00000054;
+  color: rgba(0, 0, 0, 0.71);
 }
 
 .panelList {
@@ -850,6 +857,23 @@ p.aText {
 }
 
 .highlight-dark:hover{
+  background-color: rgba(7, 7, 7, 0.63);
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.4);
+}
+
+.highlight-less-dark{
+  border-radius: 7px;
+  padding: 5px;
+  padding-left: 14px;
+  padding-right: 14px;
+  background-color: rgba(14, 17, 17, 0.13);
+  color: #c9c9c9;
+  font-size: 15px;
+  color: rgba(128, 153, 169, 0.6);
+  transition: 0.4s ease;
+}
+
+.highlight-less-dark:hover{
   background-color: rgba(7, 7, 7, 0.63);
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.4);
 }
@@ -1172,7 +1196,7 @@ p.aText {
 
 /* Handle */
 .full-bg-img-mask::-webkit-scrollbar-thumb:hover {
-  background: rgba(202, 202, 204, 0.79);
+  background: rgba(202, 202, 204, 0.48);
 }
 
 .full-bg-img-mask::-webkit-scrollbar-thumb {

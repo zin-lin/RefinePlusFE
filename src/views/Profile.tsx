@@ -7,6 +7,7 @@ import axios from "axios";
 import {type} from "os";
 import {useNavigate} from "react-router-dom";
 import ProfilePage from "./ProfilePage";
+import {ClipLoader} from "react-spinners";
 
 interface Object {
     email: string;
@@ -146,7 +147,7 @@ function Renderer (){
                         </div>
                         </div> : <ProfilePage name={email} id = {authed}></ProfilePage>}</div> :
                         <div id = 'loading' style={{display: 'flex', justifyContent: 'center'}}>
-                            <img src={loading} style={{width: '60px', margin: '100px'}}/>
+                            <ClipLoader color={'#f146cf'} loading={true}/>
                         </div>
                     }
             </div>

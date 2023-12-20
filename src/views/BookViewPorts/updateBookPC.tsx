@@ -211,7 +211,9 @@ const UpdateBookPC: React.FC<Props>= (props:Props)=>{
                                   <div style={{display: 'inline-block'}}>
                                       <img src={sc} width={200}/>
                                       <br/>
-                                      <button className='redx shRed' style={{padding: 10, marginTop: 50, width: 200}} onClick={updateMode}>
+                                      <button className='redx shRed' style={{padding: 10, marginTop: 50, width: 200}} onClick={()=>{
+                                          navigate('/project/'+bid)
+                                      }}>
                                           <p>Start Working with Data Preparation</p></button>
                                   </div>
                               </div>
