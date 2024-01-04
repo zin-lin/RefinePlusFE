@@ -113,6 +113,7 @@ const Books: React.FC= ()=>{
 
     return (
         <div className='page' style={{height:'calc(100% - 78px)', overflow:'hidden'}}>
+
             <div style={{width:'100%', height:'calc(100% - 140px)', position:'absolute', background:'transparent', zIndex:43,
                 visibility:addVisibility||'hidden', opacity:addOpacity, overflow:'hidden',
                 flex:1, display:'flex', justifyContent:'center', transition:'0.2s ease'

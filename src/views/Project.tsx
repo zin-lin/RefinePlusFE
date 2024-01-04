@@ -4,6 +4,8 @@ import {
      GridLoader,
 } from "react-spinners";
 import InfiniteLoader from "flatlist-react/lib/___subComponents/InfiniteLoader";
+import book from "../assets/dat.png";
+import axios from "axios";
 
 interface Props{
     bid : string;
@@ -17,6 +19,7 @@ interface Set {
 
 }
 const Project: React.FC= ()=> {
+    type Visibility = 'visible' | 'hidden' | 'collapse';
     const {pid} = useParams();
     const [title, setTitle] = useState('Loading...')
     const [load, setLoad] = useState(true);
@@ -24,10 +27,45 @@ const Project: React.FC= ()=> {
     const [set, setSet] = useState<Set | undefined>(undefined);
     const navigate = useNavigate();
     const [attr, setAttribute] = useState('');
+    const [mVisibility , setMVisibility] = useState<Visibility| undefined>('hidden');
+    const [mOpacity , setMOpacity] = useState(0.0);
+    const [value, setValue] = useState('');
+    const [att, setAtt] = useState('')
+    const [idx, setIdx] = useState(0)
+
 
     const setMode = (att:string) => {
         setAttribute(att);
         alert(att);
+    }
+
+    const closeAddBook= ()=>{
+        setMOpacity(0)
+        setMVisibility('hidden')
+        let inp = document.getElementById('title') as HTMLInputElement;
+        inp.value = ''
+    }
+
+    const changeCell = ( att:string, idx:number, pid:string )=>{
+        let inp = document.getElementById('title') as HTMLInputElement;
+        let val = inp.value
+        let form = new FormData();
+        form.append('val', val)
+        form.append('att', att)
+        form.append('idx', idx.toString())
+        form.append('bid', pid)
+        axios.post('/api/change-cell/', form).then(res=> res.data).then(data=>{
+            alert(data)
+            fetch(`/api/get-project-rows/${len}/${pid}`).then(resp => resp.json()).then(
+                (dat:Set )=>{
+                    if (dat.status !== 0){
+                        setSet(dat)
+                        console.log(dat)
+                    }
+                }
+            )
+        }).catch(err => alert(err))
+        closeAddBook()
     }
 
     useEffect(()=>{
@@ -47,6 +85,37 @@ const Project: React.FC= ()=> {
     }, []);
 
     return (<div className='page' style={{overflow:'hidden'}}>
+        <div style={{width:'100%', height:'calc(100% - 140px)', position:'absolute', background:'transparent', zIndex:43,
+            visibility:mVisibility||'hidden', opacity:mOpacity, overflow:'hidden',
+            flex:1, display:'flex', justifyContent:'center', transition:'0.2s ease'
+        }} >
+            <div style={{minWidth:350, width:'33%',height:400, margin:'20px', backgroundColor:'rgba(4,19,21,0.76)', display:'flex', justifyContent:'center'}} className='shadow-boxer'>
+                <div style={{width:'100%', justifyContent:'center', textAlign:'center', margin:20, marginTop:0,  zIndex:67}}>
+                    <p style={{fontSize:33, fontWeight:'bold', marginLeft:'auto', marginRight:'auto', paddingTop:10, textAlign:'center'}}>Up<span style={{color:'#d02f2f'}}>date</span> Fie
+                        <span style={{color:'#d02f2f'}}>ld</span></p>
+                    <img src={book} width={100}/>
+                    <div style={{display: 'flex', alignItems: 'center', margin:40}}>
+                            <span style={{color: '#eee', fontSize: 19, marginRight: 10}} className="material-symbols-outlined">
+                                title</span><p style={{color: '#eee', fontSize: 14}}>Title:</p>
+                        <input placeholder={value.toString()} className='noner dark' id="title" />
+                    </div>
+
+
+                    <div style={{display:'flex', justifyContent:'center', width:'270px', margin:'auto'}}>
+                        <button style={{margin:'auto', alignSelf:'center'}} className='highlight-dark' onClick={closeAddBook} >
+                            <span style={{color:'#e75b5b', fontWeight:'bold'}}>x</span> Close</button>
+                        <button style={{margin:'auto', alignSelf:'center'}} className='highlight-dark' onClick={()=>{
+                            changeCell(att, idx, pid!)
+
+                        }
+                        }>
+                            <span style={{color:'#f8601f', fontWeight:'bold'}}>#</span> Update</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
             <div style={{width:'100%', height:'100%', overflow:'auto',display:'flex', flex:1, position:'relative', transition:'0.6s ease', justifyContent:'center' }} className='full-bg-img-book' >
                 <div style={{width:'100%', textAlign:'center', height:'100%'}}>
                     <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -92,12 +161,21 @@ const Project: React.FC= ()=> {
                                 <hr style={{width: set.attributes.length*220}}/>
 
                                 {
-                                    set.rows.map(row=>{
+                                    set.rows.map((row, ind)=>{
                                         return <div>
                                             <div style={{width:'100%', display:'flex', }}>
                                                 {
                                                     set?.attributes.map(at=>{
-                                                        return <div style={{marginLeft:40, minWidth:180, wordWrap:'break-word', }}>
+                                                        return <div style={{marginLeft:40, minWidth:180, wordWrap:'break-word', }} onClick={()=>{
+                                                            setMOpacity(1.0)
+                                                            setMVisibility('visible')
+                                                            setValue(row[at])
+                                                            setAtt(at)
+                                                            setIdx(ind)
+                                                            let inp = document.getElementById('title') as HTMLInputElement;
+
+                                                        }
+                                                        }>
                                                             <p className='highlight-less-dark' style={{flexWrap:'wrap',
                                                             }}>{row[at]}</p>
                                                         </div>
